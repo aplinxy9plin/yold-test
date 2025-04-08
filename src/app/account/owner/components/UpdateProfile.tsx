@@ -29,12 +29,11 @@ const UpdateProfile = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const data = await update({
+      await update({
         name: updatedUser.name,
         description: updatedUser.description || null,
         slug: updatedUser.slug,
       });
-      console.log(data);
       setOpen(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Произошла ошибка");

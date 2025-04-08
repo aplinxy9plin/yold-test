@@ -10,8 +10,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles = {
-  primary: "bg-txt text-background-primary h-[50px] px-[22px] py-[12px] rounded-[5px] gap-[10px] focus:outline-1 focus:outline-primary-stroke disabled:bg-strokes-primary disabled:text-background-secondary flex items-center gap-2.5",
-  secondary: "bg-background-primary outline outline-strokes-primary h-[40px] px-[22px] py-[7px] rounded-[5px] gap-[10px] hover:outline-primary-stroke focus:outline-primary-stroke disabled:bg-strokes-primary disabled:text-background-secondary disabled:outline-none flex items-center gap-2.5",
+  primary: "cursor-pointer bg-txt text-background-primary h-[50px] px-[22px] py-[12px] rounded-[5px] gap-[10px] focus:outline-1 focus:outline-primary-stroke disabled:bg-strokes-primary disabled:text-background-secondary flex items-center gap-2.5",
+  secondary: "cursor-pointer bg-background-primary outline outline-strokes-primary h-[40px] px-[22px] py-[7px] rounded-[5px] gap-[10px] hover:outline-primary-stroke focus:outline-primary-stroke disabled:bg-strokes-primary disabled:text-background-secondary disabled:outline-none flex items-center gap-2.5",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

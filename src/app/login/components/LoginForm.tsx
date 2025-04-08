@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EnvelopeIcon, LockIcon, EyeIcon } from "react-line-awesome";
 import { isEmail } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 interface LoginFormProps {
   initialError?: string | null;
@@ -20,6 +21,7 @@ export default function LoginForm({ initialError }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const searchParams = useSearchParams();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,18 +31,20 @@ export default function LoginForm({ initialError }: LoginFormProps) {
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const callbackUrl = searchParams.get("callbackUrl") || "/account/owner";
 
     try {
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
+        callbackUrl,
       });
 
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        router.push("/account/owner");
+        router.push(callbackUrl);
       }
     } catch {
       setError("Произошла ошибка при входе");

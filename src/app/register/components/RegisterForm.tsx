@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { registerUser } from "@/lib/api";
 import { signIn } from "next-auth/react";
@@ -20,6 +20,7 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const searchParams = useSearchParams();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,6 +31,7 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const name = formData.get("name") as string;
+    const callbackUrl = searchParams.get("callbackUrl") || "/account/owner";
 
     try {
       await registerUser({ email, password, name });
@@ -39,12 +41,13 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
         email,
         password,
         redirect: false,
+        callbackUrl,
       });
 
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        router.push("/account/owner");
+        router.push(callbackUrl);
       }
     } catch (error) {
       setError(
