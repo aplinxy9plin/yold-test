@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { getUser } from "@/lib/api";
-import UserProfile from "./components/UserProfile";
+import UserProfile from "@/components/UserProfile";
 
 export default async function OwnerAccountPage() {
   const session = await getServerSession(authOptions);
@@ -13,7 +13,7 @@ export default async function OwnerAccountPage() {
 
   try {
     const user = await getUser(session.user.token);
-    return <UserProfile user={user} />;
+    return <UserProfile isOwner user={user} />;
   } catch {
     return (
       <div className="min-h-screen p-8">
@@ -25,4 +25,4 @@ export default async function OwnerAccountPage() {
       </div>
     );
   }
-} 
+}

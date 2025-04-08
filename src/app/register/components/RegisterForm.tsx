@@ -32,13 +32,12 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
     const name = formData.get("name") as string;
 
     try {
-      const { token } = await registerUser({ email, password, name });
+      await registerUser({ email, password, name });
 
       // Автоматически входим после успешной регистрации
       const result = await signIn("credentials", {
         email,
         password,
-        token,
         redirect: false,
       });
 
@@ -79,6 +78,7 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
           type="text"
           required
           placeholder="Имя"
+          maxLength={100}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -89,6 +89,7 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
           type="email"
           required
           placeholder="Email"
+          maxLength={300}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           error={isEmailError}
@@ -100,6 +101,7 @@ export default function RegisterForm({ initialError }: RegisterFormProps) {
           type="password"
           required
           placeholder="Пароль"
+          maxLength={300}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

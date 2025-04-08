@@ -71,6 +71,7 @@ export default function LoginForm({ initialError }: LoginFormProps) {
             type="email"
             required
             placeholder="Email"
+            maxLength={300}
             before={<EnvelopeIcon style={{ fontSize: "25px" }} />}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -84,6 +85,7 @@ export default function LoginForm({ initialError }: LoginFormProps) {
             type={showPassword ? "text" : "password"}
             required
             placeholder="Пароль"
+            maxLength={300}
             before={<LockIcon style={{ fontSize: "25px" }} />}
             after={
               <button

@@ -17,9 +17,20 @@ export interface UserResponse {
   name: string;
   email: string;
   slug: string;
-  image: string | null;
+  image: {
+    id: string;
+    url: string;
+    width: string;
+    height: string;
+  } | null;
   cover: string | null;
   description: string | null;
+}
+
+export interface UpdateProfileData {
+  name: string;
+  description: string | null;
+  slug: string;
 }
 
 export interface ApiError {
@@ -79,7 +90,9 @@ export interface RegisterResponse {
   token: string;
 }
 
-export async function registerUser(credentials: RegisterCredentials): Promise<RegisterResponse> {
+export async function registerUser(
+  credentials: RegisterCredentials
+): Promise<RegisterResponse> {
   const response = await fetch("/api/auth/register", {
     method: "POST",
     headers: {
@@ -99,4 +112,25 @@ export async function getUsers(token: string): Promise<UserResponse[]> {
   });
 
   return handleResponse<UserResponse[]>(response);
+}
+
+export async function updateProfile(
+  token: string,
+  data: UpdateProfileData
+): Promise<UserResponse> {
+  const response = await fetch(`${API_BASE_URL}/profile`, {
+    method: "PATCH",
+    headers: {
+      "X-API-KEY": token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return handleResponse<UserResponse>(response);
+}
+
+export async function getUserBySlug(slug: string): Promise<UserResponse> {
+  const response = await fetch(`${API_BASE_URL}/user/${slug}`);
+  return handleResponse<UserResponse>(response);
 }

@@ -5,13 +5,12 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import UsersList from "./components/UsersList";
+import { Typography } from "@/components/ui/Typography";
 
 export default function AccountsListPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const { users, isLoading, isError } = useUsers();
-
-  console.log("Page state:", { session, status, users, isLoading, isError });
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -51,7 +50,7 @@ export default function AccountsListPage() {
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Список пользователей</h1>
+        <Typography variant="title">Список пользователей</Typography>
         <UsersList users={users || []} />
       </div>
     </div>

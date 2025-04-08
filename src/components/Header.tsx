@@ -35,12 +35,10 @@ export default function Header() {
             {session ? (
               <div className="flex items-center space-x-4">
                 <Link href="/account/owner" className="flex items-center gap-5">
-                  <Typography variant="paragraph">
-                    {session.user?.name}
-                  </Typography>
+                  <Typography variant="paragraph">{user?.name}</Typography>
                   <Avatar
                     size="mini"
-                    image={user?.image}
+                    image={user?.image?.url}
                     username={user?.name}
                   />
                 </Link>
